@@ -1,0 +1,21 @@
+from flask import Flask, request, jsonify
+from mytranslator.translator import translate_english_to_french, translate_french_to_english
+
+app = Flask(__name__)
+
+@app.route('/translate/english_to_french', methods=['POST'])
+def translate_to_french():
+    data = request.get_json()
+    text = data['text']
+    translation = translate_english_to_french(text)
+    return jsonify({'translation': translation})
+
+@app.route('/translate/french_to_english', methods=['POST'])
+def translate_to_english():
+    data = request.get_json()
+    text = data['text']
+    translation = translate_french_to_english(text)
+    return jsonify({'translation': translation})
+
+if __name__ == '__main__':
+    app.run()
